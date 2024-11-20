@@ -1,7 +1,8 @@
 #' @export
 get_pkgs_metadata <- function(universe = "epiverse-connect") {
 
-  package_metadata <- httr2::request("https://epiverse-connect.r-universe.dev/api/packages") |>
+  package_metadata <- glue::glue("https://{universe}.r-universe.dev/api/packages") |>
+    httr2::request() |>
     httr2::req_user_agent("epiverse-connect metadata collection script") |>
     httr2::req_perform() |>
     httr2::resp_body_json()
