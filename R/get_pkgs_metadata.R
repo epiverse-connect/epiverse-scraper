@@ -8,20 +8,16 @@ get_pkgs_metadata <- function(universe = "epiverse-connect") {
     httr2::resp_body_json()
 
   package_metadata |>
-    purrr::map(~ unlist(.x[c("Package", "Title", "URL", "RemoteUrl", "_pkglogo")])) |>
-    dplyr::bind_rows() |>
-    dplyr::mutate(
-      URL_list = stringr::str_split(URL, "[,\\n[:space:]]+"),
+    purrr::map(\(x) {
+      x$articles <- unlist(purrr::map(x$`_vignettes`, "filename"))
+      x$articles <- glue::glue("https://{universe}.r-universe.dev/articles/{x$Package}/{x$articles}")
+      browser()
+      x$URL_list <- stringr::str_split(x$URL, "[,\\n[:space:]]+")
       # First URL that doesn't look like a link to a GitHub repo
-      docs_URL = purrr::map(URL_list, ~ .x[match(FALSE, startsWith(.x, "https://github.com"))])
-    ) |>
-    dplyr::select(
-      # Names expected by the front end
-      package = Package,
-      logo = "_pkglogo",
-      website = docs_URL,
-      source = RemoteUrl
-      # TODO: Add vignettes
-    )
+      x$docs_URL <- purrr::map_chr(x$URL_list, ~ .x[match(FALSE, startsWith(.x, "https://github.com"))])
+      x <- x[c("Package", "_pkglogo", "docs_URL", "RemoteUrl", "articles")]
+      names(x) <- c("Package", "logo", "website", "source", "articles")
+      return(x)
+    })
 
 }
