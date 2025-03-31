@@ -19,4 +19,6 @@ get_pkgs_metadata <- function(universe = "epiverse-connect") {
       return(x)
     })
 
+  return(package_metadata)
+
 }
