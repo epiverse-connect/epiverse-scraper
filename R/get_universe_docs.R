@@ -62,7 +62,7 @@ get_pkg_docs <- function(tarball_path, destdir) {
     value = TRUE
   )
   vignettes_to_extract <- grep(
-    "/vignettes/.*\\.R?md$",
+    "/vignettes/.*\\.[Rq]?md$",
     source_files,
     value = TRUE
   )
