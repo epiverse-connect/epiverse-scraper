@@ -1,7 +1,7 @@
 Package: epiverse.scraper
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person("Hugo", "Gruson", , "hugo.gruson+R@normalesup.org", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-4094-1476"))
 Description: What the package does (one paragraph).
@@ -11,7 +11,9 @@ Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Imports: 
+Depends:
+    R (>= 4.1.0)
+Imports:
     dplyr,
     httr2,
     purrr,
