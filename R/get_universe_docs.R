@@ -42,9 +42,11 @@ get_universe_docs <- function(universe = "epiverse-connect", destdir = "docs") {
   tarballs <- withr::local_tempdir(pattern = "tarballs")
   sources <- unzip(docs_zip_path, exdir = tarballs)
 
-  sources |>
+  file_paths <- sources |>
     purrr::discard(\(x) grepl("PACKAGES(\\.gz)?$", basename(x))) |>
-    purrr::walk(get_pkg_docs, destdir = destdir)
+    purrr::map_chr(get_pkg_docs, destdir = destdir)
+
+  return(file_paths)
 
 }
 
@@ -67,13 +69,17 @@ get_pkg_docs <- function(tarball_path, destdir) {
 
   untar(tarball_path, files = c(fct_docs_to_extract, vignettes_to_extract))
 
-  fct_docs_to_extract |>
-    purrr::map(function(file) {
+  md_fct_docs <- fct_docs_to_extract |>
+    purrr::map_chr(function(file) {
+      new_name <- gsub("\\.Rd$", ".md", file)
       rd2markdown::get_rd(file = file) |>
         rd2markdown::rd2markdown() |>
-        writeLines(gsub("\\.Rd$", ".md", file))
+        writeLines(new_name)
+      return(new_name)
     })
 
   file.remove(fct_docs_to_extract)
+
+  return(c(md_fct_docs, vignettes_to_extract))
 
 }
