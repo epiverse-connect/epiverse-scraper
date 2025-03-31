@@ -1,6 +1,6 @@
 #' Fetch documentation files for all packages from a given R-universe
 #'
-#' @inheritParams get_pkgs_metadata
+#' @inheritParams get_universe_metadata
 #' @param destdir Path where the documentation files should be written (defaults
 #'   to `"docs"`).
 #'

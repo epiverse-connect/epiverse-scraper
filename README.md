@@ -28,7 +28,7 @@ and save it as JSON,
 you can run:
 
 ```r
-get_pkgs_metadata(universe = "epiverse-connect") |>
+get_universe_metadata(universe = "epiverse-connect") |>
   jsonlite::write_json("epiverse-connect-metadata.json", pretty = TRUE)
 ```
 
