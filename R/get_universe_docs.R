@@ -54,13 +54,15 @@ get_pkg_docs <- function(tarball_path, destdir) {
 
   source_files <- untar(tarball_path, list = TRUE)
 
-  fct_docs_to_extract <- grepv(
+  fct_docs_to_extract <- grep(
     "/man/[^/]*\\.Rd$",
-    source_files
+    source_files,
+    value = TRUE
   )
-  vignettes_to_extract <- grepv(
+  vignettes_to_extract <- grep(
     "/vignettes/.*\\.R?md$",
-    source_files
+    source_files,
+    value = TRUE
   )
 
   untar(tarball_path, files = c(fct_docs_to_extract, vignettes_to_extract))
