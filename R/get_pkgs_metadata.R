@@ -1,3 +1,15 @@
+#' List of metadata for all packages from a given R-universe
+#'
+#' @param universe Name of the r-universe to explore
+#'
+#' @returns A list of list where each element refers to a specific package and
+#'   contains the following elements:
+#'   - `Package` (character): package name
+#'   - `logo` (character): Link to the package logo
+#'   - `website` (character): Link to the documentation website
+#'   - `source` (character): Link to the package source
+#'   - `articles` (character vector): Links to the package vignettes
+#'
 #' @export
 get_pkgs_metadata <- function(universe = "epiverse-connect") {
 
