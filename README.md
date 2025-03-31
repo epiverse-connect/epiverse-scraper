@@ -31,3 +31,40 @@ you can run:
 get_pkgs_metadata(universe = "epiverse-connect") |>
   jsonlite::write_json("epiverse-connect-metadata.json", pretty = TRUE)
 ```
+
+### Package documentation
+
+To get the documentation of packages listed under, e.g., the https://epiverse-connect.r-universe.dev/ universe,
+and save it under the `docs/` folder,
+you can run:
+
+```r
+get_universe_docs(universe = "epiverse-connect", destdir = "docs")
+```
+
+You will then get the following folder structure:
+
+```
+docs
+├── adegenet
+│   └── man
+│       ├── AIC.snapclust.md
+│       ├── AICc.md
+    .
+    .
+    .
+│       ├── web.md
+│       └── xvalDapc.md
+└── aedseo
+    ├── man
+    │   ├── aedseo-package.md
+    .
+    .
+    .
+    │   └── tsd.md
+    └── vignettes
+        ├── aedseo.Rmd
+        ├── burden_levels.Rmd
+        ├── generate_seasonal_wave.Rmd
+        └── seasonal_onset.Rmd
+```
