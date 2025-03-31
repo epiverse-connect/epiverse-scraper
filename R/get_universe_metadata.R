@@ -11,7 +11,7 @@
 #'   - `articles` (character vector): Links to the package vignettes
 #'
 #' @export
-get_pkgs_metadata <- function(universe = "epiverse-connect") {
+get_universe_metadata <- function(universe = "epiverse-connect") {
 
   package_metadata <- glue::glue("https://{universe}.r-universe.dev/api/packages") |>
     httr2::request() |>
