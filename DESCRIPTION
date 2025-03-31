@@ -12,10 +12,14 @@ Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.5.0)
 Imports:
     dplyr,
     glue,
     httr2,
     purrr,
-    stringr
+    stringr,
+    withr,
+    rd2markdown
+Remotes:
+    genentech/rd2markdown
