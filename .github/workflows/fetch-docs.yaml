@@ -1,0 +1,31 @@
+on:
+  workflow_dispatch:
+
+name: Fetch Epiverse-CONNECT R-universe documentation
+
+jobs:
+  fetch-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+
+      - run: |
+          epiverse.scraper::get_universe_docs()
+          tar("docs.tar.gz", "docs", compression = "gzip")
+        shell: Rscript {0}
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.date.outputs.date }}
+          tag_name: v${{ steps.date.outputs.date }}
+          files: docs.tar.gz
