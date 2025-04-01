@@ -44,7 +44,8 @@ get_universe_docs <- function(universe = "epiverse-connect", destdir = "docs") {
 
   file_paths <- sources |>
     purrr::discard(\(x) grepl("PACKAGES(\\.gz)?$", basename(x))) |>
-    purrr::map_chr(get_pkg_docs, destdir = destdir)
+    purrr::map(get_pkg_docs, destdir = destdir) |>
+    purrr::list_c()
 
   return(file_paths)
 
