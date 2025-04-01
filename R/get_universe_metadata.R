@@ -26,8 +26,9 @@ get_universe_metadata <- function(universe = "epiverse-connect") {
       x$URL_list <- stringr::str_split(x$URL, "[,\\n[:space:]]+")
       # First URL that doesn't look like a link to a GitHub repo
       x$docs_URL <- purrr::map_chr(x$URL_list, ~ .x[match(FALSE, startsWith(.x, "https://github.com"))])
-      x <- x[c("Package", "_pkglogo", "docs_URL", "RemoteUrl", "articles")]
-      names(x) <- c("Package", "logo", "website", "source", "articles")
+
+      x <- x[c("Package", "Title", "Description", "_pkglogo", "docs_URL", "RemoteUrl", "articles")]
+      names(x) <- c("Package", "title", "description", "logo", "website", "source", "articles")
       return(x)
     })
 
