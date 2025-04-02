@@ -13,14 +13,14 @@
 #' @export
 get_universe_metadata <- function(universe = "epiverse-connect") {
 
-  package_metadata <- glue::glue("https://{universe}.r-universe.dev/api/packages") %>%
-    httr2::request() %>%
-    httr2::req_user_agent("epiverse-connect metadata collection script") %>%
-    httr2::req_perform() %>%
+  package_metadata <- glue::glue("https://{universe}.r-universe.dev/api/packages") |>
+    httr2::request() |>
+    httr2::req_user_agent("epiverse-connect metadata collection script") |>
+    httr2::req_perform() |>
     httr2::resp_body_json()
 
-  package_metadata <- package_metadata %>%
-    purrr::map(function (x) {
+  package_metadata <- package_metadata |>
+    purrr::map(\(x) {
       x$articles <- unlist(purrr::map(x$`_vignettes`, "filename"))
       x$articles <- glue::glue("https://{universe}.r-universe.dev/articles/{x$Package}/{x$articles}")
       x$URL_list <- stringr::str_split(x$URL, "[,\\n[:space:]]+")
