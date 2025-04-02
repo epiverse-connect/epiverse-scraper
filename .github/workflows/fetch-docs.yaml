@@ -28,3 +28,7 @@ jobs:
           gh release create v$(date +'%Y-%m-%d')
           gh release upload v$(date +'%Y-%m-%d') docs.tar.gz
 
+      - name: Remove data from previous release
+        run: |
+          OLD_RELEASE = $(gh release list --json tagName --jq '.[1].tagName')
+          gh release delete-asset $OLD_RELEASE docs.tar.gz -y
