@@ -2,6 +2,7 @@
 
 export(get_universe_docs)
 export(get_universe_metadata)
+importFrom(magrittr,"%>%")
 importFrom(utils,download.file)
 importFrom(utils,untar)
 importFrom(utils,unzip)
