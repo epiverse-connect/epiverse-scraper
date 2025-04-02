@@ -20,7 +20,7 @@ get_universe_metadata <- function(universe = "epiverse-connect") {
     httr2::resp_body_json()
 
   package_metadata <- package_metadata %>%
-    purrr::map(\(x) {
+    purrr::map(function (x) {
       x$articles <- unlist(purrr::map(x$`_vignettes`, "filename"))
       x$articles <- glue::glue("https://{universe}.r-universe.dev/articles/{x$Package}/{x$articles}")
       x$URL_list <- stringr::str_split(x$URL, "[,\\n[:space:]]+")
