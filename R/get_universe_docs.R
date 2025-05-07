@@ -47,6 +47,19 @@ get_universe_docs <- function(universe = "epiverse-connect", destdir = "docs") {
     purrr::map(get_pkg_docs, destdir = destdir) |>
     purrr::list_c()
 
+  # Identify and remove external pkgs
+  package_metadata <- glue::glue("https://{universe}.r-universe.dev/api/packages") |>
+    httr2::request() |>
+    httr2::req_user_agent("epiverse-connect metadata collection script") |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
+
+  external_pkgs <- package_metadata |>
+    purrr::keep(~ !.x$`_registered`) |>
+    purrr::map_chr("Package")
+
+  unlink(file.path(destdir, external_pkgs), recursive = TRUE)
+
   return(file_paths)
 
 }
