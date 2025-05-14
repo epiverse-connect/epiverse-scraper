@@ -34,9 +34,13 @@ get_universe_docs <- function(universe = "epiverse-connect", destdir = "docs") {
   }
 
   docs_zip_path <- withr::local_tempfile(pattern = "pkgdocs", fileext = ".zip")
-  download.file(
-    glue::glue("https://{universe}.r-universe.dev/api/snapshot/zip?types=src"),
-    docs_zip_path
+  withr::with_options(
+    # Following CRAN recommendation of considering a speed of 1MB/s
+    list(timeout = max(300, getOption("timeout"))),
+    download.file(
+      glue::glue("https://{universe}.r-universe.dev/api/snapshot/zip?types=src"),
+      docs_zip_path
+    )
   )
 
   tarballs <- withr::local_tempdir(pattern = "tarballs")
